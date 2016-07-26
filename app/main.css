@@ -1,0 +1,15 @@
+:root {
+  --primaryColor: gray;
+}
+
+@value primary: blue;
+@value secondary: red;
+
+body {
+  background: var(--primaryColor);
+  border: 10px solid primary;
+}
+
+.decoration {
+  text-decoration: underline;
+}
