@@ -4,6 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
+    "lodash.map": "^4.5.0",
     "react": "^15.2.1",
     "react-dom": "^15.2.1"
   },

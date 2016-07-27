@@ -2,14 +2,12 @@
   --primaryColor: gray;
 }
 
-@value primary: blue;
-@value secondary: red;
-
 body {
-  background: var(--primaryColor);
-  border: 10px solid primary;
+  background-color: black;
 }
 
-.decoration {
-  text-decoration: underline;
+.button {
+  height: 40px;
+  width: 80px;
+  background-color: white;
 }
