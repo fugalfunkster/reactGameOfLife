@@ -66,27 +66,72 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var width = 100;
-	var height = 100;
+	var windowWidth = window.innerWidth;
+	var windowHeight = window.innerHeight;
+	var width = Math.round(windowWidth / 10);
+	var height = Math.round((windowHeight - 220) / 10);
+	var growth = void 0;
 	
 	var App = _react2.default.createClass({
 	  displayName: 'App',
 	  getInitialState: function getInitialState() {
-	    return { board: (0, _controllers.createNewBoard)(width, height) };
+	    return { board: (0, _controllers.createNewBoard)(width, height, 100),
+	      counter: 0,
+	      active: 'false' };
+	  },
+	  componentWillMount: function componentWillMount() {
+	    this.toggle();
 	  },
 	  passTime: function passTime() {
-	    this.setState({ board: (0, _controllers.passTheTime)(this.state.board, width, height) });
+	    this.setState({ board: (0, _controllers.passTheTime)(this.state.board, width, height),
+	      counter: this.state.counter + 1 });
+	  },
+	  clear: function clear() {
+	    if (this.state.active === 'true') {
+	      this.setState({ active: 'false' });
+	      clearInterval(growth);
+	    }
+	    this.setState({ board: (0, _controllers.createNewBoard)(width, height, 0),
+	      counter: 0 });
 	  },
 	  toggle: function toggle() {
-	    setInterval(this.passTime, 16);
+	    if (this.state.active === 'false') {
+	      this.setState({ active: 'true' });
+	      growth = setInterval(this.passTime, 16);
+	      return;
+	    } else {
+	      this.setState({ active: 'false' });
+	      clearInterval(growth);
+	      return;
+	    }
+	  },
+	  mark: function mark(index) {
+	    var tempBoard = this.state.board;
+	    tempBoard[index] = tempBoard[index] ? 0 : 1;
+	    this.setState({ board: tempBoard });
 	  },
 	
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(_board2.default, { board: this.state.board, width: width, height: height }),
-	      _react2.default.createElement(Button, { toggle: this.toggle })
+	      _react2.default.createElement(
+	        'h1',
+	        null,
+	        'The Game Of Life'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: _main2.default.buttons },
+	        _react2.default.createElement(Button, { toggle: this.toggle, text: 'Start / Stop' }),
+	        _react2.default.createElement(Button, { toggle: this.clear, text: 'Clear' }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: _main2.default.counter },
+	          'Generation: ' + this.state.counter
+	        )
+	      ),
+	      _react2.default.createElement(_board2.default, { board: this.state.board, width: width, height: height, mark: this.mark })
 	    );
 	  }
 	});
@@ -95,7 +140,7 @@
 	  return _react2.default.createElement(
 	    'div',
 	    { className: _main2.default.button, onClick: props.toggle },
-	    ' Start / Stop '
+	    props.text
 	  );
 	};
 	
@@ -110,7 +155,7 @@
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-	module.exports = {"button":"main__button___1doJv"};
+	module.exports = {"button":"main__button___1doJv","buttons":"main__buttons___l0k-9","counter":"main__counter___19tkD"};
 
 /***/ },
 /* 2 */
@@ -19817,8 +19862,8 @@
 	var Board = function Board(props) {
 	  var width = props.width;
 	  var height = props.height;
-	  var tiles = props.board.map(function (tile) {
-	    return _react2.default.createElement(Tile, { className: tile === 1 ? _boardStyles2.default.alive : _boardStyles2.default.dead });
+	  var tiles = props.board.map(function (tile, index) {
+	    return _react2.default.createElement('div', { key: index, onClick: props.mark.bind(null, index), className: tile === 1 ? _boardStyles2.default.alive : _boardStyles2.default.dead });
 	  });
 	  // console.log(tiles);
 	  var board = [];
@@ -19829,10 +19874,10 @@
 	    }
 	  }
 	  //console.lo(board);
-	  var rows = board.map(function (row) {
+	  var rows = board.map(function (row, index) {
 	    return _react2.default.createElement(
 	      'div',
-	      { className: _boardStyles2.default.row },
+	      { key: 'row' + index, className: _boardStyles2.default.row },
 	      row
 	    );
 	  });
@@ -19841,10 +19886,6 @@
 	    { className: _boardStyles2.default.board },
 	    rows
 	  );
-	};
-	
-	var Tile = function Tile(props) {
-	  return _react2.default.createElement('div', { className: props.className });
 	};
 	
 	module.exports = Board;
@@ -19868,11 +19909,11 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var createNewBoard = function createNewBoard(width, height) {
+	var createNewBoard = function createNewBoard(width, height, probability) {
 	  var board = [];
 	  // for each unit of height
 	  for (var i = 0; i < width * height; i++) {
-	    board[i] = zeroOrOne();
+	    board[i] = zeroOrOne(probability);
 	  }
 	  console.log(board);
 	  return board;
@@ -20190,8 +20231,8 @@
 	///////////////////
 	// Utility functions
 	
-	var zeroOrOne = function zeroOrOne() {
-	  return Math.round(Math.random());
+	var zeroOrOne = function zeroOrOne(probability) {
+	  return Math.round(Math.random() * probability / 100);
 	};
 	
 	//////////////////

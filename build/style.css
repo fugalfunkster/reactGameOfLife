@@ -1,13 +1,38 @@
 body {
   background-color: black;
+  color: lightgreen;
+  font-family: 'courier', sans-serif;
+}
+
+h1 {
+  font-size: 3em;
+  text-align: center;
 }
 
 .main__button___1doJv {
-  height: 40px;
-  width: 80px;
-  background-color: white;
-}.boardStyles__board___SXJGR {
+  width: auto;
+  padding: 0.25em;
+  border: 1px solid lightgreen;
+  text-align: center;
+  cursor: pointer;
+}
+
+.main__buttons___l0k-9 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   width: 80%;
+  margin: 1em auto;
+  font-size: 1.5em;
+}
+
+.main__counter___19tkD {
+  width: 35%;
+  padding: 0.25em;
+}.boardStyles__board___SXJGR {
+  width: 100%;
   margin: 0 auto;
   background-color: black;
 }
@@ -24,11 +49,10 @@ body {
 .boardStyles__tile___2Y05O {
   height: 10px;
   width: 10px;
-  border: 0.1px solid gray;
 }
 
 .boardStyles__alive___1WlzF {
-  background-color: greenYellow
+  background-color: lightgreen
 }
 
 .boardStyles__dead___3osHU {

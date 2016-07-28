@@ -7,32 +7,66 @@ import Board from './components/board.js';
 
 import {createNewBoard, passTheTime } from './controllers/controllers.js';
 
-const width = 100;
-const height = 100;
-
+const windowWidth = window.innerWidth;
+const windowHeight = window.innerHeight;
+const width = Math.round(windowWidth / 10);
+const height = Math.round((windowHeight - 220) / 10);
+let growth;
 
 const App = React.createClass({
   getInitialState() {
-    return {board: createNewBoard(width, height)};
+    return {board: createNewBoard(width, height, 100),
+            counter: 0,
+            active: 'false'};
+  },
+  componentWillMount(){
+    this.toggle();
   },
   passTime(){
-    this.setState({board: passTheTime(this.state.board, width, height)});
+    this.setState({board: passTheTime(this.state.board, width, height),
+                   counter: this.state.counter + 1});
+  },
+  clear(){
+    if (this.state.active === 'true'){
+      this.setState({active: 'false'});
+      clearInterval(growth);
+    }
+    this.setState({board: createNewBoard(width, height, 0),
+                   counter: 0});
   },
   toggle(){
-    setInterval(this.passTime, 16);
+    if(this.state.active === 'false'){
+      this.setState({active: 'true'});
+      growth = setInterval(this.passTime, 16);
+      return;
+    } else {
+      this.setState({active: 'false'});
+      clearInterval(growth);
+      return;
+    }
+  },
+  mark(index){
+    let tempBoard = this.state.board;
+    tempBoard[index] = tempBoard[index] ? 0 : 1;
+    this.setState({board: tempBoard});
   },
   render: function () {
     return (
       <div>
-        <Board board={this.state.board} width={width} height={height} />
-        <Button toggle={this.toggle} />
+        <h1>The Game Of Life</h1>
+        <div className={styles.buttons}>       
+          <Button toggle={this.toggle} text='Start / Stop'/>
+          <Button toggle={this.clear} text='Clear'/>
+          <div className={styles.counter} >{'Generation: ' + this.state.counter}</div>
+        </div>
+        <Board board={this.state.board} width={width} height={height} mark={this.mark} />
       </div>
     );
   }
 });
 
 const Button = props => {
-  return <div className={styles.button} onClick={props.toggle} > Start / Stop </div>;
+  return <div className={styles.button} onClick={props.toggle} >{props.text}</div>;
 };
 
 

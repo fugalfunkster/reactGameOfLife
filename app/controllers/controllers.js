@@ -1,10 +1,10 @@
 import _map from 'lodash.map';
 
-const createNewBoard = (width, height) => {
+const createNewBoard = (width, height, probability) => {
   const board = [];
   // for each unit of height
   for (let i = 0; i < (width * height); i++){
-    board[i] = zeroOrOne();
+    board[i] = zeroOrOne(probability);
   }
   console.log(board);
   return board;
@@ -329,8 +329,8 @@ const passTheTime = (board, width, height) => {
 ///////////////////
 // Utility functions
 
-const zeroOrOne = () => {
-  return Math.round(Math.random());
+const zeroOrOne = (probability) => {
+  return Math.round(Math.random() * probability / 100);
 };
 
 
