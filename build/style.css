@@ -1,0 +1,38 @@
+body {
+  background-color: black;
+}
+
+.main__button___1doJv {
+  height: 40px;
+  width: 80px;
+  background-color: white;
+}.boardStyles__board___SXJGR {
+  width: 80%;
+  margin: 0 auto;
+  background-color: black;
+}
+
+.boardStyles__row___RPiCy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.boardStyles__tile___2Y05O {
+  height: 10px;
+  width: 10px;
+  border: 0.1px solid gray;
+}
+
+.boardStyles__alive___1WlzF {
+  background-color: greenYellow
+}
+
+.boardStyles__dead___3osHU {
+  background-color: black
+}
+
+/*# sourceMappingURL=style.css.map*/

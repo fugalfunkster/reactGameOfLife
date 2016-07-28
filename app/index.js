@@ -7,8 +7,8 @@ import Board from './components/board.js';
 
 import {createNewBoard, passTheTime } from './controllers/controllers.js';
 
-const width = 40;
-const height = 50;
+const width = 100;
+const height = 100;
 
 
 const App = React.createClass({
@@ -19,7 +19,7 @@ const App = React.createClass({
     this.setState({board: passTheTime(this.state.board, width, height)});
   },
   toggle(){
-    setInterval(this.passTime, 300);
+    setInterval(this.passTime, 16);
   },
   render: function () {
     return (

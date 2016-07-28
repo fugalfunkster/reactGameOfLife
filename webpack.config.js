@@ -37,6 +37,10 @@ var config;
 switch(process.env.npm_lifecycle_event) {
   case 'build':
     config = merge(common,  { devtool: 'source-map' },
+                    parts.setFreeVariable(
+                     'process.env.NODE_ENV',
+                     'production'
+                   ),
                    parts.setupCSS(PATHS.app),
                    parts.setupBabelReactES6(PATHS.app));
     break;
