@@ -7,20 +7,24 @@ import Board from './components/board.js';
 
 import {createNewBoard, passTheTime } from './controllers/controllers.js';
 
+const width = 40;
+const height = 50;
+
+
 const App = React.createClass({
   getInitialState() {
-    return {board: createNewBoard(50, 100)};
+    return {board: createNewBoard(width, height)};
   },
   passTime(){
-    this.setState({board: passTheTime(this.state.board)});
+    this.setState({board: passTheTime(this.state.board, width, height)});
   },
   toggle(){
-    setInterval(this.passTime, 100);
+    setInterval(this.passTime, 300);
   },
   render: function () {
     return (
       <div>
-        <Board board={this.state.board} />
+        <Board board={this.state.board} width={width} height={height} />
         <Button toggle={this.toggle} />
       </div>
     );
