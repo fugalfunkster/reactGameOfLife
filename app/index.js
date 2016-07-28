@@ -19,7 +19,7 @@ const App = React.createClass({
     this.setState({board: passTheTime(this.state.board, width, height)});
   },
   toggle(){
-    setInterval(this.passTime, 1000);
+    setInterval(this.passTime, 300);
   },
   render: function () {
     return (
