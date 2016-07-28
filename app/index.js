@@ -9,10 +9,10 @@ import {createNewBoard, passTheTime } from './controllers/controllers.js';
 
 const App = React.createClass({
   getInitialState() {
-    return {board: createNewBoard(50, 100)};
+    return {board: createNewBoard(9, 9)};
   },
   passTime(){
-    this.setState({board: passTheTime(this.state.board)});
+    this.setState({board: passTheTime(this.state.board, 9, 9)});
   },
   toggle(){
     setInterval(this.passTime, 100);

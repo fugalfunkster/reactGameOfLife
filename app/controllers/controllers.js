@@ -3,81 +3,76 @@ import _map from 'lodash.map';
 const createNewBoard = (width, height) => {
   const board = [];
   // for each unit of height
-  for (let i = 0; i < height; i++){
-    board.push([]);
-    // create a row with a width === width
-    for (let j = 0; j < width; j++) {
-      board[i][j] = zeroOrOne();
-    }
+  for (let i = 0; i < (width * height); i++){
+    board[i] = zeroOrOne();
   }
+  console.log(board.length);
   return board;
-}
+};
 
-const passTheTime = (board) => { 
+const passTheTime = (board, width, height) => { 
 
-  let newBoard = _map(board, (row, rowPosition) => {
-
-    let newRow = _map(row, (tile, index) => {
+  let newBoard = _map(board, (tile, index) => {
 
       //we must count the tiles neighbors
       let numberOfNeighbors = 0;
 
       /////////////////
       // if the tile appears in the first row
-      if (rowPosition === 0) {
+      if (index < width) {
 
-        // and is the leftmost tile
+          // and is the leftmost tile
           if (index === 0) {
             // check the tile to the right
-            if (board[rowPosition][index + 1] == 1) {
+            if (board[index + 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-right
-            if (board[rowPosition + 1][index + 1] == 1) {
+            if (board[index + 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom
-            if (board[rowPosition + 1][index] == 1) {
+            if (board[index + width] == 1) {
               numberOfNeighbors += 1;
             }
           }
 
         // or is the rightmost tile
-          if (index === rowPosition.length - 1) {
+          if (index === width - 1) {
             // check the tile to the left
-            if (board[rowPosition][index - 1] == 1) {
+            if (board[index - 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-left
-            if (board[rowPosition + 1][index - 1] == 1) {
+            if (board[index - 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
-             // check the tile to the bottom
-            if (board[rowPosition + 1][index] == 1) {
+            // check the tile to the bottom
+            if (board[index + width] == 1) {
               numberOfNeighbors += 1;
             }
           }
 
         // otherwise 
-          if (index !== 0 && index !== rowPosition.length - 1) {
+          if (index !== 0 && index !== width - 1) {
             // check the tile to the right
-            if (board[rowPosition][index + 1] == 1) {
+            if (board[index + 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-right
-            if (board[rowPosition + 1][index + 1] == 1) {
+            if (board[index + 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom
-            if (board[rowPosition + 1][index] == 1) {
+            if (board[index + width] == 1) {
               numberOfNeighbors += 1;
-            } 
+            }
             // check the tile to the left
-            if (board[rowPosition][index - 1] == 1) {
+            if (board[index - 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-left
-            if (board[rowPosition + 1][index - 1] == 1) {
+            if (board[index - 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
           }
@@ -88,60 +83,60 @@ const passTheTime = (board) => {
 
       /////////////////
       // if the tile appears in the last row
-      if (rowPosition === board.length - 1) {
+      if (index <= (width * (height - 1))) {
 
         // and is the leftmost tile
-          if (index === 0) {
+          if (index === width * (height - 1)) {
             // check the tile to the right
-            if (board[rowPosition][index + 1] == 1) {
+            if (board[index + 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-right
-            if (board[rowPosition - 1][index + 1] == 1) {
+            if (board[index + 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top
-            if (board[rowPosition - 1][index] == 1) {
+            if (board[index - width] == 1) {
               numberOfNeighbors += 1;
             }
           }
 
         // or is the rightmost tile
-          if (index === rowPosition.length - 1) {
+          if (index === board.length - 1) {
             // check the tile to the left
-            if (board[rowPosition][index - 1] == 1) {
+            if (board[index - 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-left
-            if (board[rowPosition - 1][index - 1] == 1) {
+            if (board[index - 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
              // check the tile to the top
-            if (board[rowPosition - 1][index] == 1) {
+            if (board[index - width] == 1) {
               numberOfNeighbors += 1;
             }
           }
 
         // otherwise 
-          if (index !== 0 && index !== rowPosition.length - 1) {
+          if (index !== width * (height - 1) && index !== board.length - 1) {
             // check the tile to the right
-            if (board[rowPosition][index + 1] == 1) {
+            if (board[index + 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-right
-            if (board[rowPosition - 1][index + 1] == 1) {
+            if (board[index + 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top
-            if (board[rowPosition - 1][index] == 1) {
+            if (board[index - width] == 1) {
               numberOfNeighbors += 1;
-            } 
+            }
             // check the tile to the left
-            if (board[rowPosition][index - 1] == 1) {
+            if (board[index - 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-left
-            if (board[rowPosition - 1][index - 1] == 1) {
+            if (board[index - 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
           }
@@ -152,88 +147,88 @@ const passTheTime = (board) => {
 
       /////////////////
       // if the tile appears in a middle tow
-      if (rowPosition !== board.length - 1 && rowPosition !== 0) {
+      if (index > width - 1 && index < width * (height - 1)) {
 
         // and is the leftmost tile
-          if (index === 0) {
+          if (index % width === 0) {
             // check the tile to the top
-            if (board[rowPosition - 1][index] == 1) {
+            if (board[index - width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-right
-            if (board[rowPosition - 1][index + 1] == 1) {
+            if (board[index + 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the right
-            if (board[rowPosition][index + 1] == 1) {
+            if (board[index + 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-right
-            if (board[rowPosition + 1][index + 1] == 1) {
+            if (board[index + 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom
-            if (board[rowPosition + 1][index] == 1) {
+            if (board[index + width] == 1) {
               numberOfNeighbors += 1;
             }
           }
 
         // or is the rightmost tile
-          if (index === rowPosition.length - 1) {
-             // check the tile to the bottom
-            if (board[rowPosition + 1][index] == 1) {
+          if (index % (width - 1) === 0) {
+            // check the tile to the bottom
+            if (board[index + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-left
-            if (board[rowPosition + 1][index - 1] == 1) {
+            if (board[index - 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the left
-            if (board[rowPosition][index - 1] == 1) {
+            if (board[index - 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-left
-            if (board[rowPosition - 1][index - 1] == 1) {
+            if (board[index - 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
-             // check the tile to the top
-            if (board[rowPosition - 1][index] == 1) {
+            // check the tile to the top
+            if (board[index - width] == 1) {
               numberOfNeighbors += 1;
             }
           }
 
         // otherwise 
-          if (index !== 0 && index !== rowPosition.length - 1) {
+          if (index % width !== 0 && index % (width - 1) !== 0) {
             // check the tile to the top
-            if (board[rowPosition - 1][index] == 1) {
+            if (board[index - width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-right
-            if (board[rowPosition - 1][index + 1] == 1) {
+            if (board[index + 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the right
-            if (board[rowPosition][index + 1] == 1) {
+            if (board[index + 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-right
-            if (board[rowPosition + 1][index + 1] == 1) {
+            if (board[index + 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom
-            if (board[rowPosition + 1][index] == 1) {
+            if (board[index + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the bottom-left
-            if (board[rowPosition + 1][index - 1] == 1) {
+            if (board[index - 1 + width] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the left
-            if (board[rowPosition][index - 1] == 1) {
+            if (board[index - 1] == 1) {
               numberOfNeighbors += 1;
             }
             // check the tile to the top-left
-            if (board[rowPosition - 1][index - 1] == 1) {
+            if (board[index - 1 - width] == 1) {
               numberOfNeighbors += 1;
             }
           }
@@ -254,10 +249,6 @@ const passTheTime = (board) => {
 
     });
 
-    return newRow;
-
-  });
-  
   return newBoard;
 
 };
@@ -267,7 +258,7 @@ const passTheTime = (board) => {
 // Utility functions
 
 const zeroOrOne = () => {
- return Math.round(Math.random());
+  return Math.round(Math.random());
 };
 
 
@@ -277,4 +268,4 @@ const zeroOrOne = () => {
 module.exports = {
   createNewBoard: createNewBoard,
   passTheTime: passTheTime
-}
+};
