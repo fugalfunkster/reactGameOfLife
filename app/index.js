@@ -9,7 +9,7 @@ import {createNewBoard, passTheTime } from './controllers/controllers.js';
 
 const App = React.createClass({
   getInitialState() {
-    return {board: createNewBoard(50, 40)};
+    return {board: createNewBoard(50, 100)};
   },
   passTime(){
     this.setState({board: passTheTime(this.state.board)});
