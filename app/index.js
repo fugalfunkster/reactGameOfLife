@@ -19,7 +19,7 @@ const App = React.createClass({
             counter: 0,
             active: 'false'};
   },
-  componentWillMount(){
+  componentDidMount(){
     this.toggle();
   },
   passTime(){
@@ -32,6 +32,14 @@ const App = React.createClass({
       clearInterval(growth);
     }
     this.setState({board: createNewBoard(width, height, 0),
+                   counter: 0});
+  },
+  random(){
+    if (this.state.active === 'true'){
+      this.setState({active: 'false'});
+      clearInterval(growth);
+    }
+    this.setState({board: createNewBoard(width, height, 70),
                    counter: 0});
   },
   toggle(){
@@ -57,6 +65,7 @@ const App = React.createClass({
         <div className={styles.buttons}>       
           <Button toggle={this.toggle} text='Start / Stop'/>
           <Button toggle={this.clear} text='Clear'/>
+          <Button toggle={this.random} text='Random'/>
           <div className={styles.counter} >{'Generation: ' + this.state.counter}</div>
         </div>
         <Board board={this.state.board} width={width} height={height} mark={this.mark} />
