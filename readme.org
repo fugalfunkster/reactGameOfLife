@@ -1,0 +1,16 @@
+* React Game of Life
+
+** Description
+Based on Conways "Game of Life" (https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+My implementation uses React's lifecycle methods to calculate the next state and rerender as soon as the prior rendering completes. It's wicked fast. And, I made it responsive, so the game board's size is calculated to fit the user's device.
+
+** View Project
+http://www.fugalfunkster.com/reactGameOfLife/build/
+
+** Objectives [6/6]
+- [X] User Story: When I first arrive at the game, it will randomly generate a board and start playing.
+- [X] User Story: I can start and stop the board.
+- [X] User Story: I can set up the board.
+- [X] User Story: I can clear the board.
+- [X] User Story: When I press start, the game will play out.
+- [X] User Story: Each time the board changes, I can see how many generations have gone by.
